@@ -2,6 +2,8 @@
 
 **Buy smart. Sell higher. Build an empire.**
 
+**Play it live:** https://ahmedps520-svg.github.io/DOPACARTBLACK/
+
 DOPACART is a single-player shopping and business simulation game that looks like a premium e-commerce site. You start with virtual credits, buy fictional products, source stock from suppliers, run your own stores and trade a market whose prices actually move.
 
 > Everything in DOPACART is fictional. Every product, brand, price, store, supplier and delivery is made up, and credits (CR) are virtual game currency with no real-world value. The game never processes real purchases and never ships anything.
@@ -16,6 +18,8 @@ npm run build      # type-check + production build into dist/
 ```
 
 The build is a static site with relative paths and a hash router, so you can host `dist/` anywhere.
+
+**Deployment:** every push to `main` runs the tests, builds the site and publishes `dist/` to the `gh-pages` branch (`.github/workflows/deploy.yml`), which GitHub Pages serves. Pull requests run the same tests and build (`.github/workflows/ci.yml`).
 
 ## Core loop
 
