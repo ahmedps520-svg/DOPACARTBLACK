@@ -1,0 +1,100 @@
+/* ───────── DOPACART design tokens ───────── */
+:root {
+  --bg: #08080a;
+  --bg-2: #0d0d10;
+  --surface: #131317;
+  --surface-2: #19191e;
+  --surface-3: #212127;
+  --line: #26262d;
+  --line-2: #33333b;
+  --text: #f4f4f5;
+  --text-2: #b4b4bd;
+  --text-3: #7c7c87;
+  --text-4: #55555f;
+
+  --accent: #e5132f;
+  --accent-2: #ff3348;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(229, 19, 47, 0.14);
+  --accent-line: rgba(229, 19, 47, 0.45);
+
+  --up: #2fd17c;
+  --up-soft: rgba(47, 209, 124, 0.12);
+  --down: #ff4d5e;
+  --down-soft: rgba(255, 77, 94, 0.12);
+  --warn: #ffb547;
+  --warn-soft: rgba(255, 181, 71, 0.12);
+  --info: #5ab0ff;
+  --gold: #d4af37;
+  --gold-2: #f3d27a;
+  --metal: linear-gradient(135deg, #9aa1ab 0%, #e8ebef 45%, #8a9099 55%, #d4d8de 100%);
+
+  --r-common: #9ca3af;
+  --r-uncommon: #3ddc97;
+  --r-rare: #4ea8ff;
+  --r-epic: #b36bff;
+  --r-legendary: #ffb020;
+  --r-exclusive: #ff2d55;
+
+  --radius-s: 8px;
+  --radius: 12px;
+  --radius-l: 18px;
+  --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-2: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 18px 50px rgba(0, 0, 0, 0.55);
+  --gloss: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0) 42%);
+
+  --font: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Bebas Neue', 'Impact', 'Arial Narrow', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --header-h: 64px;
+  --sidebar-w: 232px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur: 220ms;
+  color-scheme: dark;
+}
+
+:root[data-theme='graphite'] {
+  --bg: #121215;
+  --bg-2: #17171b;
+  --surface: #1c1c21;
+  --surface-2: #232329;
+  --surface-3: #2b2b33;
+  --line: #31313a;
+  --line-2: #3d3d47;
+}
+
+:root[data-theme='midnight'] {
+  --bg: #06080d;
+  --bg-2: #0a0d15;
+  --surface: #0f131d;
+  --surface-2: #151a26;
+  --surface-3: #1c2231;
+  --line: #222a3b;
+  --line-2: #2d3649;
+}
+
+:root[data-accent='scarlet'] {
+  --accent: #ff4421;
+  --accent-2: #ff6a4a;
+  --accent-soft: rgba(255, 68, 33, 0.14);
+  --accent-line: rgba(255, 68, 33, 0.45);
+}
+
+:root[data-accent='gold'] {
+  --accent: #d4af37;
+  --accent-2: #f3d27a;
+  --accent-ink: #120e02;
+  --accent-soft: rgba(212, 175, 55, 0.14);
+  --accent-line: rgba(212, 175, 55, 0.45);
+}
+
+:root[data-motion='reduced'] {
+  --dur: 0ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur: 0ms;
+  }
+}

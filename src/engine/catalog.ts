@@ -1330,7 +1330,7 @@ export const PRODUCTS: ProductDef[] = [
     basePrice: 1190,
     description: 'A first-print Obsidian Wyrm holo, slabbed at a perfect 10. Only twenty graded copies are known to exist.',
     specs: [['Grade', 'Gem Mint 10'], ['Print', 'First edition'], ['Edition', '1 of 20 graded'], ['Slab', 'Tamper-proof case']],
-    art: { kind: 'card', primary: '#0b0b0d', secondary: '#c9a24a', accent: '#e10600', finish: 'gloss', variant: 1 },
+    art: { kind: 'card', primary: '#0b0b0d', secondary: '#c9a24a', accent: '#e10600', finish: 'gloss', variant: 2 },
     limited: true,
     totalSupply: 20,
     volatility: 0.18,

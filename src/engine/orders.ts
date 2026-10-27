@@ -47,6 +47,15 @@ export function eta(o: Order): number {
   return statusSchedule(o).delivered;
 }
 
+/**
+ * Delivery estimate shown to the player: the original promise until the
+ * supplier reports a delay (at the "shipped" stage), then the revised time.
+ */
+export function displayEta(o: Order): { t: number; revised: boolean } {
+  const reported = o.delay > 0 && STATUS_FLOW.indexOf(o.status) >= STATUS_FLOW.indexOf('shipped');
+  return reported ? { t: eta(o), revised: true } : { t: o.placedAt + o.plannedDuration, revised: false };
+}
+
 /** True once the order is past its originally promised time. */
 export function isDelayed(o: Order, t: number): boolean {
   return o.delay > 0 && t > o.placedAt + o.plannedDuration && o.status !== 'delivered' && o.status !== 'cancelled';

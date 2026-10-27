@@ -3,7 +3,7 @@
  *
  *   fair value  F = B · (D/100)^α · clamp((S_ref / S)^β, 0.55, 2.4)
  *   log price   x' = x + κ·dt·(ln F − x) + σ·m·√dt·Z      (|Δx| ≤ 5% per tick)
- *   demand      D' = D + κ_D·dt·(D_target − D) + σ_D·√dt·Z·D
+ *   demand      D' = D + κ_D·dt·(D_target − D) + σ_D·(σ/0.06)·√dt·Z·D
  *   supply      S' = S + r·dt·(S_eq − S) + noise,  S_eq = S_ref·m_s·√(100/D)
  *
  * B = base price, D = demand index, S = market supply, α = demand
@@ -106,8 +106,12 @@ export function stepProduct(
   const rp = RARITY_PARAMS[def.rarity];
 
   // Demand: mean-reverting toward a target shaped by lifecycle and events.
+  // Its noise scales with the product's volatility, so staples stay calm
+  // while rare collectibles swing.
+  const sigma = mp.volatility * mods.volatilityMult * scenarioVol;
+  const demandNoise = DEMAND_NOISE * clamp(sigma / 0.06, 0.45, 2.2);
   const target = mp.demandBase * mods.demandMult * scenarioDemand;
-  mp.demand += DEMAND_REVERSION * dt * (target - mp.demand) + DEMAND_NOISE * sq * gauss(h) * mp.demand;
+  mp.demand += DEMAND_REVERSION * dt * (target - mp.demand) + demandNoise * sq * gauss(h) * mp.demand;
   mp.demand = clamp(mp.demand, DEMAND_MIN, DEMAND_MAX);
 
   // Supply & simulated market volume.
@@ -132,7 +136,6 @@ export function stepProduct(
   // Price: log-price reverts toward fair value with bounded noise.
   const fv = fairValue(def, mp);
   const x = Math.log(mp.price);
-  const sigma = mp.volatility * mods.volatilityMult * scenarioVol;
   const dx = clamp(PRICE_REVERSION * dt * (Math.log(fv) - x) + sigma * sq * gauss(h), -MAX_TICK_MOVE, MAX_TICK_MOVE);
   mp.price = round2(clamp(Math.exp(x + dx), priceFloor(def, mp), priceCeiling(def)));
 
@@ -154,6 +157,12 @@ export function computeMods(s: GameState): Map<string, ProductMods> {
       m.volatilityMult *= e.volatilityMult ?? 1;
       mods.set(id, m);
     }
+  }
+  // Overlapping events stack, but within sane bounds.
+  for (const m of mods.values()) {
+    m.demandMult = clamp(m.demandMult, 0.35, 2.4);
+    m.supplyMult = clamp(m.supplyMult, 0.3, 2);
+    m.volatilityMult = clamp(m.volatilityMult, 0.5, 2.5);
   }
   return mods;
 }
