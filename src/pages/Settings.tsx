@@ -60,7 +60,7 @@ export function SettingsPage() {
   const [importErr, setImportErr] = useState('');
   const file = useRef<HTMLInputElement>(null);
 
-  const set = (patch: Partial<Settings>, msg?: string) => run((s) => updateSettings(s, patch), msg ? { success: msg } : { quiet: true });
+  const set = (patch: Partial<Settings>, msg?: string) => run((s) => updateSettings(s, patch), msg ? { success: msg, lock: false } : { quiet: true, lock: false });
 
   const exportSave = () => {
     const blob = new Blob([store.exportSave()], { type: 'application/json' });

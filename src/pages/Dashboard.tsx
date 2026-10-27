@@ -241,7 +241,7 @@ export function Dashboard() {
         <Rail ids={data.trending} />
       </Section>
 
-      <Section title="Recommended investments" sub="Products where several recorded signals line up. Signals, not guarantees — prices can and do fall." icon={<Compass size={22} className="accent" />} to="/trading">
+      <Section title="Recommended investments" sub="Products where several recorded signals line up. Signals, not guarantees — prices can and do fall." icon={<Compass size={22} className="accent" />}>
         {data.signals.length === 0 ? (
           <div className="card">
             <Empty title="No strong signals right now">Check back after the next market move or event.</Empty>

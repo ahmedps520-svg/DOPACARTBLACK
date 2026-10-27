@@ -84,7 +84,7 @@ export function Cart() {
                       {cr(mp.price)} CR each · <Change value={changeOver(mp, 1440)} /> 24h · {availableUnits(mp)} available
                     </div>
                   </div>
-                  <QtyInput value={l.qty} max={Math.max(1, max)} onChange={(n) => run((st) => setCartQty(st, l.productId, n), { quiet: false })} />
+                  <QtyInput value={l.qty} max={Math.max(1, max)} onChange={(n) => run((st) => setCartQty(st, l.productId, n), { lock: false })} />
                   <div className="right" style={{ minWidth: 110 }}>
                     <Credits value={mp.price * l.qty} />
                   </div>

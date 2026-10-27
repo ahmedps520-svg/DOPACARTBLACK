@@ -63,6 +63,8 @@ export interface DispatchOptions {
   /** Show an error toast on failure (default true). */
   errorToast?: boolean;
   quiet?: boolean;
+  /** UI double-submit lock (default on); settings toggles turn it off. */
+  lock?: boolean;
 }
 
 let toastSeq = 1;

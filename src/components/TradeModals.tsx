@@ -27,13 +27,19 @@ export function SellModal({ productId, open, onClose, initialMode = 'market' }: 
   const { run, busy } = useAction();
   const store = activeStore(s);
   const mp = s.market[productId];
-  const [price, setPrice] = useState(() => Math.round(mp.price * 100) / 100);
+  // Suggest a price that clears the payment fee with a margin, within the allowed band.
+  const suggested = () => {
+    const cost = s.holdings[productId]?.avgCost ?? 0;
+    const target = Math.max(mp.price * 1.05, (cost / (1 - STORE_PAYMENT_FEE)) * 1.1);
+    return Math.round(Math.min(mp.price * LISTING_PRICE_MAX, Math.max(mp.price * LISTING_PRICE_MIN, target)) * 100) / 100;
+  };
+  const [price, setPrice] = useState(suggested);
 
   useEffect(() => {
     if (open) {
       setMode(initialMode);
       setQty(Math.min(1, free) || 1);
-      setPrice(Math.round(mp.price * 100) / 100);
+      setPrice(suggested());
     }
   }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -138,6 +144,8 @@ export function SellModal({ productId, open, onClose, initialMode = 'market' }: 
             <dd>≈ {forecast.toFixed(1)} units / day</dd>
             <dt>Payment fee ({(STORE_PAYMENT_FEE * 100).toFixed(1)}%)</dt>
             <dd>{cr(price * STORE_PAYMENT_FEE)} / unit</dd>
+            <dt>Break-even price</dt>
+            <dd>{cr((holding?.avgCost ?? 0) / (1 - STORE_PAYMENT_FEE))} CR</dd>
             <dt>Profit per unit vs your cost</dt>
             <dd className={storeProfitPerUnit >= 0 ? 'up' : 'down'}>{crSigned(storeProfitPerUnit)}</dd>
           </dl>

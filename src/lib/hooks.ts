@@ -31,6 +31,7 @@ export function useAction() {
   const [busy, setBusy] = useState(false);
   const run = useCallback(
     <T,>(cmd: (s: GameState) => CommandResult<T>, opts?: DispatchOptions): CommandResult<T> | null => {
+      if (opts?.lock === false) return dispatch(cmd, opts);
       if (busyRef.current) return null;
       busyRef.current = true;
       setBusy(true);
